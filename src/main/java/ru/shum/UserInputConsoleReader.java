@@ -4,28 +4,27 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 /**
- * `UserInputConsoleReader` - класс,
- * реализующий интерфейс `UserInputReader`.
- * Он использует `Scanner` для чтения пользовательского ввода
- * с консоли. Класс содержит метод `readUserData()`,
- * который предлагает пользователю ввести данные в определенном порядке,
- * разделяя их пробелом. Затем метод разбивает введенные данные
- * на составляющие и выполняет их парсинг. Если формат данных неверный,
- * выбрасывается исключение `ParseException`.
- * Если введено неверное количество данных,
- * выбрасывается `UserDataException`.
- * Если все данные корректны, создается и возвращается объект `UserData`.
+ * `UserInputConsoleReader` - класс, реализующий интерфейс `UserInputReader`. Он использует
+ * `Scanner` для чтения пользовательского ввода с консоли. Класс содержит метод `readUserData()`,
+ * который предлагает пользователю ввести данные в определенном порядке, разделяя их пробелом. Затем
+ * метод разбивает введенные данные на составляющие и выполняет их парсинг. Если формат данных
+ * неверный, выбрасывается исключение `ParseException`. Если введено неверное количество данных,
+ * выбрасывается `UserDataException`. Если все данные корректны, создается и возвращается объект
+ * `UserData`.
  */
 public class UserInputConsoleReader implements UserInputReader {
+
   private Scanner scanner;
-  public UserInputConsoleReader (Scanner scanner) {
+
+  public UserInputConsoleReader(Scanner scanner) {
     this.scanner = scanner;
   }
 
   @Override
   public UserData readUserData() throws UserDataException {
     while (true) {
-      System.out.println("Введите данные в следующем порядке, разделяя их пробелом: Фамилия Имя Отчество Дата рождения (dd.mm.yyyy) Номер телефона Пол (f или m)");
+      System.out.println(
+          "Введите данные в следующем порядке, разделяя их пробелом: Фамилия Имя Отчество Дата рождения (dd.mm.yyyy) Номер телефона Пол (f или m)");
       try {
         String input = scanner.nextLine();
         String[] data = input.split(" ");
@@ -37,19 +36,22 @@ public class UserInputConsoleReader implements UserInputReader {
         long phoneNumber = parsePhoneMumber(data[4]);
         Gender gender = parseGender(data[5]);
 
-        return new UserData(data[0], data[1], data[2], dateOfBirth,phoneNumber, gender);
-    } catch (ParseException | NumberFormatException e) {
+        return new UserData(data[0], data[1], data[2], dateOfBirth, phoneNumber, gender);
+      } catch (ParseException | NumberFormatException e) {
         System.out.println("Ошибка: " + e.getMessage());
       }
     }
   }
-}    private long parsePhoneNumber(String phoneNumberString) throws ParseException {
-  try {
-    return Long.parseLong(phoneNumberString);
-  } catch (NumberFormatException e) {
-    throw new ParseException("Неверный формат номера телефона");
-  }
+
 }
+
+  private long parsePhoneNumber(String phoneNumberString) throws ParseException {
+    try {
+      return Long.parseLong(phoneNumberString);
+    } catch (NumberFormatException e) {
+      throw new ParseException("Неверный формат номера телефона");
+    }
+  }
 
   private Gender parseGender(String genderString) throws ParseException {
     if (genderString.equalsIgnoreCase("m")) {

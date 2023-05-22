@@ -6,21 +6,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 /**
- * `UserDataFileWriterImpl` - класс, реализующий интерфейс
- * `UserDataFileWriter`. Он используется для записи данных
- * пользователя в файл. Класс содержит метод `writeUserData()`,
- * который принимает объект `UserData`.
- * Пользователю предлагается ввести имя файла,
- * в который будут записаны данные.
- * Затем создаётся объект `FileWriter` для указанного файла
- * и записываются данные в форматированном виде.
- * После записи данных файл закрывается.
- * В случае возникновения ошибок ввода-вывода выбрасывается
- * исключение `IOException`.
- * После успешной записи данных выводится сообщение
- * об успешной операции.
+ * `UserDataFileWriterImpl` - класс, реализующий интерфейс `UserDataFileWriter`. Он используется для
+ * записи данных пользователя в файл. Класс содержит метод `writeUserData()`, который принимает
+ * объект `UserData`. Пользователю предлагается ввести имя файла, в который будут записаны данные.
+ * Затем создаётся объект `FileWriter` для указанного файла и записываются данные в форматированном
+ * виде. После записи данных файл закрывается. В случае возникновения ошибок ввода-вывода
+ * выбрасывается исключение `IOException`. После успешной записи данных выводится сообщение об
+ * успешной операции.
  */
-public class UserDataFileWriterImpl implements UserDataFileWriter{
+public class UserDataFileWriterImpl implements UserDataFileWriter {
 
   @Override
   public void writeUserData(UserData userData) throws IOException {
