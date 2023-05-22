@@ -1,6 +1,7 @@
 package ru.shum;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 /**
@@ -13,7 +14,6 @@ import java.util.Scanner;
  * `UserData`.
  */
 public class UserInputConsoleReader implements UserInputReader {
-
   private Scanner scanner;
 
   public UserInputConsoleReader(Scanner scanner) {
@@ -23,8 +23,8 @@ public class UserInputConsoleReader implements UserInputReader {
   @Override
   public UserData readUserData() throws UserDataException {
     while (true) {
-      System.out.println(
-          "Введите данные в следующем порядке, разделяя их пробелом: Фамилия Имя Отчество Дата рождения (dd.mm.yyyy) Номер телефона Пол (f или m)");
+      System.out.println("Введите данные в следующем порядке, разделяя их пробелом: Фамилия Имя Отчество Дата рождения (dd.mm.yyyy) Номер телефона Пол (f или m)");
+
       try {
         String input = scanner.nextLine();
         String[] data = input.split(" ");
@@ -32,8 +32,9 @@ public class UserInputConsoleReader implements UserInputReader {
         if (data.length != 6) {
           throw new UserDataException("Введено неверное количество данных");
         }
+
         LocalDate dateOfBirth = parseDateOfBirth(data[3]);
-        long phoneNumber = parsePhoneMumber(data[4]);
+        long phoneNumber = parsePhoneNumber(data[4]);
         Gender gender = parseGender(data[5]);
 
         return new UserData(data[0], data[1], data[2], dateOfBirth, phoneNumber, gender);
@@ -43,7 +44,13 @@ public class UserInputConsoleReader implements UserInputReader {
     }
   }
 
-}
+  private LocalDate parseDateOfBirth(String dateOfBirthString) throws ParseException {
+    try {
+      return LocalDate.parse(dateOfBirthString, DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+    } catch (Exception e) {
+      throw new ParseException("Неверный формат даты рождения");
+    }
+  }
 
   private long parsePhoneNumber(String phoneNumberString) throws ParseException {
     try {
